@@ -9,6 +9,16 @@ import ReactDOM from 'react-dom';
 import { Accordion, AccordionItem } from '../src';
 
 class Demo extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      activeItems: 0
+    };
+  }
+
+  handleClick(index) {
+    this.setState({activeItems: index})
+  }
 
   render() {
     return (
@@ -17,10 +27,10 @@ class Demo extends React.Component {
 
         <h2>Default settings</h2>
 
-        <Accordion>
+        <Accordion activeItems={this.state.activeItems}>
           {[1, 'two', 3, 'four', 5].map((item) => {
             return (
-              <AccordionItem title={`Item ${ item }`} slug={item} key={item}>
+              <AccordionItem title={`Item ${ item }`} slug={item} key={item} onClick={this.handleClick.bind(this, item)}>
                 <div>
                   {`Item ${ item } content`}
                   {item === 3 ? <p><img src="https://cloud.githubusercontent.com/assets/38787/8015584/2883817e-0bda-11e5-9662-b7daf40e8c27.gif" /></p> : null}
@@ -32,7 +42,7 @@ class Demo extends React.Component {
 
         <h2>Allow multiple</h2>
 
-        <Accordion allowMultiple={true} activeItems={2}>
+        <Accordion allowMultiple={true}>
           {[1, 2, 3, 4, 5].map((item) => {
             return (
               <AccordionItem title={`Item ${ item }`} key={item}>
